@@ -1,60 +1,68 @@
 console.log("test : script orinoco chargé");
-/**
- * TODO : Créer une fonction : genererCarte()
- */
-const div = document.getElementById("liste-nounours");
+
+// Crée des cartes pour chaque nounours disponible dans l'api
+function genererCarte(lstNounours) {
+    // Récupération de la div où l'on va insérer les cartes de nounours
+    const divNounours = document.getElementById("liste-nounours");
+
+    // Parcours la liste des nounours disponible sur l'API
+    for (const item of lstNounours) {
+        // Crée une carte
+        const carte = document.createElement("div");
+        carte.classList.add("col-12", "col-md-6", "card");
+        divNounours.append(carte);
+
+        // Image de la carte
+        const carteImage = document.createElement("img");
+        carteImage.classList.add("card-img-top","w-100");
+        carteImage.src = item.imageUrl;
+        carteImage.alt = "ourson en peluche";
+        carte.append(carteImage);
+
+        // Carte body
+        const carteBody = document.createElement("div");
+        carteBody.classList.add("card-body");
+        carte.append(carteBody);
+
+        // Lien de la carte (vers la page produit)
+        const carteLien = document.createElement("a");
+        carteLien.classList.add("stretched-link");
+        carteLien.href = "produit.html?_id" + item._id;
+        carteBody.append(carteLien);
+
+        // Titre de la carte (nom du nounours)
+        const carteTitre = document.createElement("h3");
+        carteTitre.classList.add("card-title");
+        carteTitre.textContent = item.name;
+        carteBody.append(carteTitre);
+
+        // Description de la carte
+        const carteDescription = document.createElement("p");
+        carteDescription.classList.add("card-text")
+        carteDescription.textContent = item.description;
+        carteBody.append(carteDescription);
+
+
+        // Prix de la carte
+        const cartePrix = document.createElement("p");
+        cartePrix.textContent = item.price + " €";
+        cartePrix.classList.add("card-subititle", "p-1", "bg-primary", "font-weight-bold", "text-center");
+        carteBody.append(cartePrix);
+    }
+}
+
 
 // Requete HTTP de type Get
 fetch("http://localhost:3000/api/teddies")
     .then(reponse => reponse.json()) // Retourne une réponse en format json
     .then(data => {
-        // TODO : traitement de la réponse
-        for (const item of data) {
-            console.log(item);
-            // Créer une carte
-            // Création de la première div avec la classe col-12
-            const eltCol = document.createElement("div");
-            eltCol.setAttribute("class", "col-12 col-lg-6 mb-3");
 
-            // Crée la div "carte shadow"
-            const eltCarte = document.createElement("div");
-            eltCarte.setAttribute("class", "card shadow card-body");
-            
-            // Crée le titre de la carte
-            const eltTitre = document.createElement("h3");
-            eltTitre.textContent = item.name;
-            eltTitre.setAttribute("class", "card-title")
-
-            // Crée le link
-            const eltLink = document.createElement("a");
-            eltLink.setAttribute("href", "produit.html?id=")
-
-            // Crée l'image de la carte
-            const eltImage = document.createElement("img");
-            eltImage.setAttribute("src", item.imageUrl);
-            eltImage.setAttribute("class", "w-100");
-            
-            // Crée la description de la carte
-            const eltDescription = document.createElement("p");
-            eltDescription.setAttribute("class", "card-text");
-            eltDescription.textContent = item.description;
-
-            // Crée le choix de la couleur
-
-            // Crée le prix
-            const eltPrix = document.createElement("p");
-            eltPrix.setAttribute("class", "card-subtitle");
-            eltPrix.textContent = item.price + " €";
-
-            // Ajout des éléments
-            div.append(eltCol);                 // élément principal
-            eltCol.append(eltCarte);            // élément carte
-            eltCarte.append(eltTitre);          // élément titre de la carte
-            eltCarte.append(eltImage);          // élément image de la carte
-            eltCarte.append(eltDescription);    // élément description de la carte
-            eltCarte.append(eltPrix);           // élément prix de la carte
-        }
+        // console.log(data);
+        genererCarte(data);
+        
     }).catch(function(erreur) {
+
         alert("Une erreur inattendue c'est produite, merci de réessayer plus tard !")
+        console.log(erreur);
     });
 
