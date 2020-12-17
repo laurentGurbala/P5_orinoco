@@ -1,3 +1,7 @@
+console.log("test : script orinoco chargé");
+/**
+ * TODO : Créer une fonction : genererCarte()
+ */
 const div = document.getElementById("liste-nounours");
 
 // Requete HTTP de type Get
