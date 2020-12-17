@@ -21,6 +21,10 @@ fetch("http://localhost:3000/api/teddies")
             eltTitre.textContent = item.name;
             eltTitre.setAttribute("class", "card-title")
 
+            // Crée le link
+            const eltLink = document.createElement("a");
+            eltLink.setAttribute("href", "produit.html?id=")
+
             // Crée l'image de la carte
             const eltImage = document.createElement("img");
             eltImage.setAttribute("src", item.imageUrl);
@@ -46,5 +50,7 @@ fetch("http://localhost:3000/api/teddies")
             eltCarte.append(eltDescription);    // élément description de la carte
             eltCarte.append(eltPrix);           // élément prix de la carte
         }
+    }).catch(function(erreur) {
+        alert("Une erreur inattendue c'est produite, merci de réessayer plus tard !")
     });
 
