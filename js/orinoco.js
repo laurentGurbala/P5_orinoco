@@ -27,7 +27,7 @@ function genererCarte(lstNounours) {
         // Lien de la carte (vers la page produit)
         const carteLien = document.createElement("a");
         carteLien.classList.add("stretched-link");
-        carteLien.href = "produit.html?_id" + item._id;
+        carteLien.href = "produit.html?_id=" + item._id;
         carteBody.append(carteLien);
 
         // Titre de la carte (nom du nounours)

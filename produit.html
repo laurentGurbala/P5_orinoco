@@ -7,7 +7,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <title>Orinoco - Acceuil</title>
+        <title>Orinoco</title>
     </head>
 
     <body style="background-color: #e3f2fd;">
@@ -44,19 +44,30 @@
         <!-- Contenu Principal -->
         <main class="container">
             
-            <!-- Titre Principal de la page -->
-            <section class="row mt-lg-5">
-                <div class="col">
-                    <h1 class="text-center">La référence des ours en peluche fait main</h1>
+            <!---->
+            <section class="row justify-content-center">
+                <div class="col-8 card shadow m-3">
+                    <div class="card-body">
+                        <img id="image-nounours" src="backend/images/teddy_1.jpg" alt="ourson en peluche fait main" class="card-img shadow">
+                        <div class="card-text">
+                            <h2 id="nom-nounours" class="card-title">Nom</h2>
+                            <p id="description-nounours" class="card-text">Description</p>
+                            <div class="form-group">
+                                <label for="couleur">choix couleur</label>
+                                <select name="couleur" id="couleur" class="form-control">
+                                    <option disabled selected>Choisissez votre couleur</option>
+                                </select>
+                            </div>
+                            <p id="prix-nounours" class="card-subtitle m-2 font-weight-bold">Prix €</p>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i> Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
                 </div>    
             </section>
 
-            <!-- Carte des ours à vendre -->
-            <h2>Sélectionnez votre ours en peluche</h2>
-            <section id="liste-nounours" class="row">
-                <!-- Placer les cartes ici : -->
-                
-            </section>
+
 
         </main>
 
@@ -73,9 +84,7 @@
         </footer>
         
         <!-- JavaScript perso -->
-        <!-- <script src="js/ajax.js"></script> -->
-        <script src="js/orinoco.js"></script>
-        
+        <script src="js/produit.js"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
