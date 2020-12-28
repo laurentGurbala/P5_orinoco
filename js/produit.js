@@ -109,6 +109,8 @@ function ajoutProduitDansLocalStorage(produit) {
         // Convertion du tableau en lineaire et ajout dans le local storage
         let conversion = JSON.stringify(commande);
         sessionStorage.setItem("panier-nounours", conversion);
+
+        alert(produit.name + " ajouté au panier")
     });
 }
 
