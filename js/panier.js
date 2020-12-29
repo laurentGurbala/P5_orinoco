@@ -2,6 +2,9 @@ console.log("test : script panier chargé");
 
 // Variables
 const divPanier = document.getElementById("div-panier");
+const divTotal = document.getElementById("div-total");
+
+let total = 0;
 
 // Les fonctions
 
@@ -11,7 +14,7 @@ const divPanier = document.getElementById("div-panier");
  */
 function messagePanierVide() {
     const message = document.createElement("p");    // Création d'un élément HTML <p>
-    message.classList.add("h3", "text-center", "col");     // Ajout des classes     
+    message.classList.add("h3", "text-center");     // Ajout des classes     
     message.textContent = "Votre panier est vide";  // Ajout du contenu
     divPanier.append(message);                      // Ajout de l'élément à la page HTML
 }
@@ -51,7 +54,7 @@ function creerContenuPanier(objet) {
 
     // --- btn supprime du nounours ---
     const btnSuppr = document.createElement("button");
-    btnSuppr.classList.add("btn");
+    btnSuppr.classList.add("btn", "btn-supprime");
     btnSuppr.innerHTML = '<i class="far fa-trash-alt"></i>';
 
     // Ajout des containeurs
@@ -70,17 +73,57 @@ function supprimeProduitDuPanier() {
 
 }
 
+// <<<<<<<<<<<<<<<<<<       APLI            >>>>>>>>>>>>>>>>>>>>>
+
 // Récupération et convertion du contenu du sessionStorage (en obj)
 const panier = JSON.parse(sessionStorage.getItem("panier-nounours"));
-console.log(panier);
 
+// Message affiché si le panier est vide
 if(panier === null) {
     messagePanierVide();
-}else {
+}
+// Création du contenue du session storage dans le panier
+else {
     for (const item of panier) {
-        console.log(item.nom);
+
         creerContenuPanier(item);
+        total += item.prix;
+        divTotal.textContent = total + " €"
     }
 }
 
-// La requête HTTP
+// Supprime un article du panier
+// Tous les boutons supprimer de la page
+const lstBtnSupprime = document.getElementsByClassName("btn-supprime");
+
+if(panier != null) {
+
+    for (let i = 0; i < panier.length; i++) {
+        lstBtnSupprime[i].addEventListener("click", (event) => {
+            event.preventDefault();
+            // Supprime l'objet du panier
+            panier.splice(i, 1);
+            
+            // Converti les objets en string linéaire pour le storage
+            let conversionJson = JSON.stringify(panier);
+            // Mise à jour du session storage
+            sessionStorage.setItem("panier-nounours", conversionJson);
+            
+            // Supprime l'article de la page HTML
+            lstBtnSupprime[i].parentElement.remove();
+            
+            // Vérification du panier vide
+            if (panier.length === 0) {
+                sessionStorage.removeItem("panier-nounours");
+                console.log(panier);
+            }
+            
+            /**
+             * Pour éviter que le [i] ne s'actualise pas après une suppression,
+             * pouvant créer un bug, on actualise la page, relançant la boucle,
+             * ce qui redéfinie le [i]
+             */
+            window.location.href = "panier.html";
+        })
+    }
+}
