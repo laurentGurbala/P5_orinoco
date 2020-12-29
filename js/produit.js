@@ -95,7 +95,8 @@ function ajoutProduitDansLocalStorage(produit) {
             nom: produit.name,
             id: produit._id,
             couleur: couleurChoisie,
-            prix: produit.price
+            prix: produit.price,
+            image: produit.imageUrl
         };
 
         // Ajoute le produit au tableau de commande
@@ -126,7 +127,7 @@ fetch(url + id)
         
     }).catch(function(erreur) {
 
-        alert("Une erreur inattendue c'est produite, merci de réessayer plus tard !")
+        alert("Une erreur inattendue c'est produite, merci de réessayer plus tard !");
         console.log(erreur);
     });
 
