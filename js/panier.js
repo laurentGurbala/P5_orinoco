@@ -1,4 +1,4 @@
-console.log("test : script panier chargé");
+// console.log("test : script panier chargé");
 
 // Variables
 const divPanier = document.getElementById("div-panier");
@@ -127,3 +127,81 @@ if(panier != null) {
         })
     }
 }
+
+// Expression régulière
+
+function validationUniquementTexte(value) {
+    return /^[a-zA-Z]+$/.test(value);
+}
+
+function validationUniquementChiffre(value) {
+    return /^[0-9]{2,5}$/.test(value);
+}
+
+function validationTexteEtChiffre(value) {
+    return /\w+/.test(value);
+}
+
+function validationEmail(value) {    
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(value)){
+        return true;
+    }
+    
+    return false;
+}
+
+// Récupération des champs du formulaire
+const formNom = document.getElementById("nom");
+const formPrenom = document.getElementById("prenom");
+const formAdresse = document.getElementById("adresse");
+const formCP = document.getElementById("cp");
+const formVille = document.getElementById("ville");
+const formEmail = document.getElementById("email");
+
+// Création d'un tableau comportant tous les champs du formulaire
+const lstChamps = [];
+lstChamps.splice(0,0, formNom, formPrenom, formAdresse, formCP, formVille, formEmail);
+
+
+// console.log(lstChamps);
+
+function testValidationFormulaire() {
+    if(validationUniquementTexte(formNom.value) === false) {
+        // TODO : erreur
+        console.log("erreur dans le nom");
+    } 
+    
+    if(validationUniquementTexte(formPrenom.value) === false) {
+        console.log("erreur dans le prénom");
+        // TODO :
+    } 
+    
+    if (validationTexteEtChiffre(formAdresse.value) === false) {
+        console.log("erreur dans l'adresse");
+        // TODO :
+    } 
+    
+    if (validationUniquementChiffre(formCP.value) === false) {
+        // TODO :
+        console.log("erreur dans le cp")
+    } 
+    
+    if (validationUniquementTexte(formVille.value) === false) {
+        console.log("erreur dans la ville")
+        // TODO :
+    } 
+    
+    if (validationEmail(formEmail.value) === false) {
+        console.log("erreur dans l'email");
+        // TODO :
+    }
+}
+
+// Traitement appuis du bouton "envoyer"
+const btnValidation = document.getElementById("btn-valide");
+
+btnValidation.addEventListener("click", (evenement) => {
+    evenement.preventDefault();
+    // TODO : créer un boolean pour checké la validité du formulaire avant envoi
+    testValidationFormulaire();
+});
