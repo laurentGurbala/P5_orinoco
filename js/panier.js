@@ -277,7 +277,6 @@ btnValidation.addEventListener("click", (evenement) => {
         sessionStorage.setItem("contact", contactJson);
 
 
-
         // Récupérer la commande
         if (panier !== null) {
 
@@ -286,9 +285,7 @@ btnValidation.addEventListener("click", (evenement) => {
                 product.push(item.id);
             });
             
-            console.log(product);
-            console.log(contact);
-            
+            // Conversion en param demandé
             let objData = {
                 contact : contact,
                 products: product
@@ -298,8 +295,6 @@ btnValidation.addEventListener("click", (evenement) => {
                 // const commandeClient = {contact, product};
                 
                 let objetRequest = JSON.stringify(objData);
-
-                console.log(objData);
                 
                 // Requete http
                 fetch("http://localhost:3000/api/teddies/order", {
@@ -310,9 +305,13 @@ btnValidation.addEventListener("click", (evenement) => {
                     .then(reponse => reponse.json())
                     .then(data => {
                         console.log(data);
-                        localStorage.setItem("commande", data.orderId);
+                        // Sauvegarde des données du backend
+                        sessionStorage.setItem("data", JSON.stringify(data));
+                        // Suppression du panier
+                        sessionStorage.removeItem("panier-nounours");
                     })
-                    .catch((erreur) => {console.error(erreur)});
+                    .catch((erreur) => {console.error(erreur)
+                });
             }
 
         } else {
