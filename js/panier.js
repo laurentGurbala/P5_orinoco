@@ -226,6 +226,30 @@ function testValidationFormulaire() {
 // Traitement appuis du bouton "envoyer"
 const btnValidation = document.getElementById("btn-valide");
 
+// Test fonction request
+function post(url, dataJSON) {
+    const promise = new Promise(function(resolve, reject){
+
+        // Création de la requête
+        const requete = new XMLHttpRequest();
+        // Ouvre la requete
+        requete.open("POST", url);
+        requete.setRequestHeader("Content-Type", "application/json");
+        requete.onreadystatechange = function () {
+            if (requete.readyState === XMLHttpRequest.DONE) {
+                if (requete.status === 200) {
+                    let reponse = requete.response;
+                    resolve(JSON.parse(reponse));
+                }else {
+                    reject(requete.status);
+                }
+            }
+        }
+        requete.send(JSON.stringify(dataJSON));
+    });
+    return promise;
+}
+
 btnValidation.addEventListener("click", (evenement) => {
     evenement.preventDefault();
     
@@ -236,7 +260,7 @@ btnValidation.addEventListener("click", (evenement) => {
     let formulaireValide = testValidationFormulaire();
 
     if(formulaireValide == true) {
-        console.log("bravo, ton formulaire est bien remplie");
+        // console.log("bravo, ton formulaire est bien remplie");
         
         // Creation du client en session storage
         const contact = {
@@ -252,6 +276,48 @@ btnValidation.addEventListener("click", (evenement) => {
         // Envoie de l'objet contact dans le session storage
         sessionStorage.setItem("contact", contactJson);
 
+
+
+        // Récupérer la commande
+        if (panier !== null) {
+
+            let product = []
+            panier.forEach(item => {
+                product.push(item.id);
+            });
+            
+            console.log(product);
+            console.log(contact);
+            
+            let objData = {
+                contact : contact,
+                products: product
+            };
+            if(product.length > 0 && contact !== null) {
+                // TODO :  traitement de la commande
+                // const commandeClient = {contact, product};
+                
+                let objetRequest = JSON.stringify(objData);
+
+                console.log(objData);
+                
+                // Requete http
+                fetch("http://localhost:3000/api/teddies/order", {
+                    method: "POST",
+                    headers: {'content-Type' : 'application/json'},
+                    body: objetRequest
+                })
+                    .then(reponse => reponse.json())
+                    .then(data => {
+                        console.log(data);
+                        localStorage.setItem("commande", data.orderId);
+                    })
+                    .catch((erreur) => {console.error(erreur)});
+            }
+
+        } else {
+            console.log("tu as cliqué sur valider, mais t'as rien commandé ??!")
+        }
 
 
     } else {
