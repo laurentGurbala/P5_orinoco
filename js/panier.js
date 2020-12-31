@@ -135,7 +135,7 @@ function validationUniquementTexte(value) {
 }
 
 function validationUniquementChiffre(value) {
-    return /^[0-9]{2,5}$/.test(value);
+    return /^[0-9]+$/.test(value);
 }
 
 function validationTexteEtChiffre(value) {
@@ -159,42 +159,66 @@ const formVille = document.getElementById("ville");
 const formEmail = document.getElementById("email");
 
 // Création d'un tableau comportant tous les champs du formulaire
-const lstChamps = [];
-lstChamps.splice(0,0, formNom, formPrenom, formAdresse, formCP, formVille, formEmail);
+// const lstChamps = [];
+// lstChamps.splice(0,0, formNom, formPrenom, formAdresse, formCP, formVille, formEmail);
 
+// Récupération de l'élément d'affiche des messages d'erreures
+const messErr = document.getElementById("message-erreur");
 
-// console.log(lstChamps);
+// Message de l'erreur saisie dans le formulaire
+function messageErreurFormulaire(message) {
+    
+    // Création de l'élément
+    const liErr = document.createElement("li");
+    
+    // Ajout du message dans l'élément
+    liErr.textContent = message;
+    
+    // Ajout de l'élément dans la liste des erreurs
+    messErr.append(liErr);
+}
 
+// Test si une erreur dans le formulaire existe
 function testValidationFormulaire() {
+    let valide = true;
+    let message = "";
     if(validationUniquementTexte(formNom.value) === false) {
-        // TODO : erreur
-        console.log("erreur dans le nom");
+        message = "Nom saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     } 
     
     if(validationUniquementTexte(formPrenom.value) === false) {
-        console.log("erreur dans le prénom");
-        // TODO :
+        message = "Prénom saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     } 
     
     if (validationTexteEtChiffre(formAdresse.value) === false) {
-        console.log("erreur dans l'adresse");
-        // TODO :
+        message = "Adresse saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     } 
     
     if (validationUniquementChiffre(formCP.value) === false) {
-        // TODO :
-        console.log("erreur dans le cp")
+        message = "Code postal saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     } 
     
     if (validationUniquementTexte(formVille.value) === false) {
-        console.log("erreur dans la ville")
-        // TODO :
+        message = "Ville saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     } 
     
     if (validationEmail(formEmail.value) === false) {
-        console.log("erreur dans l'email");
-        // TODO :
+        message = "E-mail saisie invalide."
+        messageErreurFormulaire(message);
+        valide = false;
     }
+
+    return valide;
 }
 
 // Traitement appuis du bouton "envoyer"
@@ -202,6 +226,33 @@ const btnValidation = document.getElementById("btn-valide");
 
 btnValidation.addEventListener("click", (evenement) => {
     evenement.preventDefault();
-    // TODO : créer un boolean pour checké la validité du formulaire avant envoi
-    testValidationFormulaire();
+    
+    // Reset de la liste des erreurs
+    messErr.innerHTML = "";
+    messErr.parentElement.classList.replace("d-block", "d-none");
+
+    let formulaireValide = testValidationFormulaire();
+
+    if(formulaireValide == true) {
+        console.log("bravo, ton formulaire est bien remplie");
+        
+        // Creation du client en session storage
+        const contact = {
+            firstName : formNom.value,
+            lastName : formPrenom.value,
+            address : formAdresse.value,
+            city : formVille.value,
+            email : formEmail.value
+        }
+
+        // Conversion de l'objet en json string lineaire (format pour le storage)
+        const contactJson = JSON.stringify(contact);
+        // Envoie de l'objet contact dans le session storage
+        sessionStorage.setItem("contact", contactJson);
+
+        
+
+    } else {
+        messErr.parentElement.classList.replace("d-none", "d-block");
+    }
 });
