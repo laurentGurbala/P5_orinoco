@@ -309,6 +309,7 @@ btnValidation.addEventListener("click", (evenement) => {
                         sessionStorage.setItem("data", JSON.stringify(data));
                         // Suppression du panier
                         sessionStorage.removeItem("panier-nounours");
+                        window.location = "confirmation.html";
                     })
                     .catch((erreur) => {console.error(erreur)
                 });
