@@ -154,13 +154,21 @@ function validationEmail(value) {
 const formNom = document.getElementById("nom");
 const formPrenom = document.getElementById("prenom");
 const formAdresse = document.getElementById("adresse");
-const formCP = document.getElementById("cp");
 const formVille = document.getElementById("ville");
 const formEmail = document.getElementById("email");
 
-// Création d'un tableau comportant tous les champs du formulaire
-// const lstChamps = [];
-// lstChamps.splice(0,0, formNom, formPrenom, formAdresse, formCP, formVille, formEmail);
+// Pré-remplissage du formulaire
+const contactJson = sessionStorage.getItem("contact");
+if(contactJson !== null) {
+
+    const contact = JSON.parse(contactJson);
+    
+    formNom.value = contact.firstName;
+    formPrenom.value = contact.lastName;
+    formAdresse.value = contact.address;
+    formVille.value = contact.city;
+    formEmail.value = contact.email;
+}
 
 // Récupération de l'élément d'affiche des messages d'erreures
 const messErr = document.getElementById("message-erreur");
@@ -196,12 +204,6 @@ function testValidationFormulaire() {
     
     if (validationTexteEtChiffre(formAdresse.value) === false) {
         message = "Adresse saisie invalide."
-        messageErreurFormulaire(message);
-        valide = false;
-    } 
-    
-    if (validationUniquementChiffre(formCP.value) === false) {
-        message = "Code postal saisie invalide."
         messageErreurFormulaire(message);
         valide = false;
     } 
@@ -250,7 +252,7 @@ btnValidation.addEventListener("click", (evenement) => {
         // Envoie de l'objet contact dans le session storage
         sessionStorage.setItem("contact", contactJson);
 
-        
+
 
     } else {
         messErr.parentElement.classList.replace("d-none", "d-block");
