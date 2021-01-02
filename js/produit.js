@@ -50,37 +50,22 @@ function ajoutProduitDansLocalStorage(produit) {
         // Sauvegarder l'option choisie
         const couleurNounours = document.getElementById("couleur")
         const couleurChoisie = couleurNounours.value;
-        // console.log(couleurNounours.value) // => valeur de la couleur choisie
         
-        // <<<<<< Récupération dans le sessionStorage les données de tout le json >>>>>>>>
-        // console.log(produit) // => json du produit seul
-        // let produitJson = JSON.stringify(produit); 
-        // => Stocke tout le contenue du json en string linear
-        
-        // TODO : supprimer le doublon de création d'objet et supprimer la première méthode
-
-        // <<<<<< Créer un objet avec uniquement les infos qui nous interresse >>>>>>>>
-        // let objetNounours = {
-        //     nom: produit.name,
-        //     id: produit._id,
-        //     couleur: couleurChoisie,
-        //     prix: produit.price
-        // };
-
-        // console.log(objetNounours); // => Affiche bien l'objet créer "objetNounours"
-        
-        // Récupération du contenue du sessionStorage
+        /**
+         *  Récupération dans le local storage la valeur de la clé "panier-nounours".
+         *  Celui-ci est parsé en objet JS
+         */
         let contenuStorage = sessionStorage.getItem("panier-nounours");
-        // Convertion en objet js
         contenuStorage = JSON.parse(contenuStorage);
 
-        // Stocker les objets dans un tableau
+        // Si le local storage ne contenait pas encore de "panier-nounours",
+        // Création du tableau que contiendra "panier-nounours"
         let commande = contenuStorage;
         if(commande === null) {
             commande = [];
         }
 
-        // Création d'un objet "produit" pour la commande
+        // Création d'un objet litéral "produit" pour la commande
         let objetNounours = {
             nom: produit.name,
             id: produit._id,
@@ -92,16 +77,14 @@ function ajoutProduitDansLocalStorage(produit) {
         // Ajoute le produit au tableau de commande
         commande.push(objetNounours);
 
-        /**
-         * Le tableau de commande contient des OBJETS nounours.
-         * Pour les stocker dans le storage, on doit les convertir en "string lineaire"
-        */
-
-        // Convertion du tableau en lineaire et ajout dans le local storage
+        // Le tableau de commande contient des OBJETS nounours,
+        // pour les stocker dans le storage, on doit les convertir en "string lineaire",
+        // et ajout dans le local storage.
         let conversion = JSON.stringify(commande);
         sessionStorage.setItem("panier-nounours", conversion);
 
-        alert(produit.name + " ajouté au panier")
+        // Informe le client que sont produit à été ajouté à son panier.
+        alert(produit.name + " ajouté au panier");
     });
 }
 
@@ -118,4 +101,4 @@ fetchGet(id)
         alert("Une erreur inattendue c'est produite, merci de réessayer plus tard !");
         console.log(erreur);
     });
-
+    
