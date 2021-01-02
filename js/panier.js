@@ -226,30 +226,6 @@ function testValidationFormulaire() {
 // Traitement appuis du bouton "envoyer"
 const btnValidation = document.getElementById("btn-valide");
 
-// Test fonction request
-function post(url, dataJSON) {
-    const promise = new Promise(function(resolve, reject){
-
-        // Création de la requête
-        const requete = new XMLHttpRequest();
-        // Ouvre la requete
-        requete.open("POST", url);
-        requete.setRequestHeader("Content-Type", "application/json");
-        requete.onreadystatechange = function () {
-            if (requete.readyState === XMLHttpRequest.DONE) {
-                if (requete.status === 200) {
-                    let reponse = requete.response;
-                    resolve(JSON.parse(reponse));
-                }else {
-                    reject(requete.status);
-                }
-            }
-        }
-        requete.send(JSON.stringify(dataJSON));
-    });
-    return promise;
-}
-
 btnValidation.addEventListener("click", (evenement) => {
     evenement.preventDefault();
     
@@ -296,7 +272,7 @@ btnValidation.addEventListener("click", (evenement) => {
                 
                 let objetRequest = JSON.stringify(objData);
                 
-                // Requete http
+                // Requete fetch de type POST
                 fetch("http://localhost:3000/api/teddies/order", {
                     method: "POST",
                     headers: {'content-Type' : 'application/json'},

@@ -1,5 +1,3 @@
-console.log("test : script orinoco chargé");
-
 // Crée des cartes pour chaque nounours disponible dans l'api
 function genererCarte(lstNounours) {
     // Récupération de la div où l'on va insérer les cartes de nounours
@@ -53,10 +51,8 @@ function genererCarte(lstNounours) {
 
 
 // Requete HTTP de type Get
-fetch("http://localhost:3000/api/teddies")
-    .then(reponse => reponse.json()) // Retourne une réponse en format json
-    .then(data => {
-
+fetchGet()
+    .then(data => {                 // Traitement de la requete
         // console.log(data);
         genererCarte(data);
         
