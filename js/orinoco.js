@@ -5,14 +5,21 @@ function genererCarte(lstNounours) {
 
     // Parcours la liste des nounours disponible sur l'API
     for (const item of lstNounours) {
+        
+        const divCol = document.createElement("div");
+        divCol.classList.add("col");
+        divNounours.append(divCol);
+        
         // Crée une carte
         const carte = document.createElement("div");
-        carte.classList.add("col-12", "col-md-6", "card");
-        divNounours.append(carte);
+        carte.classList.add("card", "h-100");
+        // todo : ajout de la dimension (exemple : style = "widht: 18rem")
+        // carte.setAttribute("style", "width:18rem");
+        divCol.append(carte);
 
         // Image de la carte
         const carteImage = document.createElement("img");
-        carteImage.classList.add("card-img-top","w-100");
+        carteImage.classList.add("card-img-top", "img-fluid");
         carteImage.src = item.imageUrl;
         carteImage.alt = "ourson en peluche";
         carte.append(carteImage);
@@ -23,10 +30,10 @@ function genererCarte(lstNounours) {
         carte.append(carteBody);
 
         // Lien de la carte (vers la page produit)
-        const carteLien = document.createElement("a");
-        carteLien.classList.add("stretched-link");
-        carteLien.href = "produit.html?_id=" + item._id;
-        carteBody.append(carteLien);
+        // const carteLien = document.createElement("a");
+        // carteLien.classList.add("stretched-link");
+        // carteLien.href = "produit.html?_id=" + item._id;
+        // carteBody.append(carteLien);
 
         // Titre de la carte (nom du nounours)
         const carteTitre = document.createElement("h3");
@@ -42,9 +49,12 @@ function genererCarte(lstNounours) {
 
 
         // Prix de la carte
-        const cartePrix = document.createElement("p");
+        // const cartePrix = document.createElement("p");
+        const cartePrix = document.createElement("a")
+        cartePrix.href = "produit.html?_id=" + item._id;
         cartePrix.textContent = item.price + " €";
-        cartePrix.classList.add("card-subititle", "p-1", "bg-primary", "font-weight-bold", "text-center");
+        // cartePrix.classList.add("card-subtitle", "bg-primary", "font-weight-bold", "text-center");
+        cartePrix.classList.add("btn", "btn-primary", "stretched-link");
         carteBody.append(cartePrix);
     }
 }
