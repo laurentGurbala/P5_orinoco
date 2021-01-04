@@ -1,8 +1,9 @@
-// console.log("test : script panier chargé");
-
-// Variables
+// Récupération des éléments HTML
 const divPanier = document.getElementById("div-panier");
 const divTotal = document.getElementById("div-total");
+
+// Récupération et convertion du panier de la commande (objet JS)
+const panier = JSON.parse(sessionStorage.getItem("panier-nounours"));
 
 let total = 0;
 
@@ -73,10 +74,6 @@ function supprimeProduitDuPanier() {
 
 }
 
-// <<<<<<<<<<<<<<<<<<       APLI            >>>>>>>>>>>>>>>>>>>>>
-
-// Récupération et convertion du contenu du sessionStorage (en obj)
-const panier = JSON.parse(sessionStorage.getItem("panier-nounours"));
 
 // Message affiché si le panier est vide
 if(panier === null) {
