@@ -5,9 +5,3 @@
 .bg-primary-light {
     background-color: #e3e5fd;
 }
-
-img.fit-cover {
-    max-width: 100%;
-    height: 55%;
-    object-fit: cover;
-}

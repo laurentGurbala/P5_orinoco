@@ -12,12 +12,12 @@ function genererCarte(lstNounours) {
         
         // Crée une carte
         const carte = document.createElement("div");
-        carte.classList.add("card", "h-100", "p-2");
+        carte.classList.add("card", "p-2");
         divCol.append(carte);
 
         // Image de la carte
         const carteImage = document.createElement("img");
-        carteImage.classList.add( "fit-cover", "img-thumbnail", "shadow");
+        carteImage.classList.add( "card-img-top", "img-thumbnail", "shadow");
         carteImage.src = item.imageUrl;
         carteImage.alt = "ourson en peluche";
         carte.append(carteImage);
@@ -26,12 +26,6 @@ function genererCarte(lstNounours) {
         const carteBody = document.createElement("div");
         carteBody.classList.add("card-body");
         carte.append(carteBody);
-
-        // Lien de la carte (vers la page produit)
-        // const carteLien = document.createElement("a");
-        // carteLien.classList.add("stretched-link");
-        // carteLien.href = "produit.html?_id=" + item._id;
-        // carteBody.append(carteLien);
 
         // Titre de la carte (nom du nounours)
         const carteTitre = document.createElement("h3");
@@ -45,13 +39,10 @@ function genererCarte(lstNounours) {
         carteDescription.textContent = item.description;
         carteBody.append(carteDescription);
 
-
         // Prix de la carte
-        // const cartePrix = document.createElement("p");
         const cartePrix = document.createElement("a")
         cartePrix.href = "produit.html?_id=" + item._id;
-        cartePrix.textContent = item.price + " €";
-        // cartePrix.classList.add("card-subtitle", "bg-primary", "font-weight-bold", "text-center");
+        cartePrix.textContent = item.price / 100 + " €";
         cartePrix.classList.add("btn", "btn-primary", "stretched-link");
         carteBody.append(cartePrix);
     }

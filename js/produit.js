@@ -33,7 +33,7 @@ function remplaceLeTemplate(nounours) {
 
     // Remplace le prix
     const prixNounours = document.getElementById("prix-nounours");
-    prixNounours.textContent = nounours.price + " €";
+    prixNounours.textContent = nounours.price/100 + " €";
 }
 
 // Ajouter le produit au localStorage
@@ -70,7 +70,7 @@ function ajoutProduitDansLocalStorage(produit) {
             nom: produit.name,
             id: produit._id,
             couleur: couleurChoisie,
-            prix: produit.price,
+            prix: produit.price/100,
             image: produit.imageUrl
         };
 

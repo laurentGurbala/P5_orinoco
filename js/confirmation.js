@@ -27,4 +27,4 @@ for (let i = 0; i < data.products.length; i++) {
     const item = data.products[i];
     total += item.price;
 }
-divTotal.textContent = total + " €"
+divTotal.textContent = total/100 + " €"
