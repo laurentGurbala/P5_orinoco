@@ -7,19 +7,17 @@ function genererCarte(lstNounours) {
     for (const item of lstNounours) {
         
         const divCol = document.createElement("div");
-        divCol.classList.add("col");
+        divCol.classList.add("col", "mb-3");
         divNounours.append(divCol);
         
         // Crée une carte
         const carte = document.createElement("div");
-        carte.classList.add("card", "h-100");
-        // todo : ajout de la dimension (exemple : style = "widht: 18rem")
-        // carte.setAttribute("style", "width:18rem");
+        carte.classList.add("card", "h-100", "p-2");
         divCol.append(carte);
 
         // Image de la carte
         const carteImage = document.createElement("img");
-        carteImage.classList.add("card-img-top", "img-fluid");
+        carteImage.classList.add( "fit-cover", "img-thumbnail", "shadow");
         carteImage.src = item.imageUrl;
         carteImage.alt = "ourson en peluche";
         carte.append(carteImage);
