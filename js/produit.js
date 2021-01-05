@@ -55,7 +55,7 @@ function ajoutProduitDansLocalStorage(produit) {
          *  Récupération dans le local storage la valeur de la clé "panier-nounours".
          *  Celui-ci est parsé en objet JS
          */
-        let contenuStorage = sessionStorage.getItem("panier-nounours");
+        let contenuStorage = localStorage.getItem("panier-nounours");
         contenuStorage = JSON.parse(contenuStorage);
 
         // Si le local storage ne contenait pas encore de "panier-nounours",
@@ -81,7 +81,7 @@ function ajoutProduitDansLocalStorage(produit) {
         // pour les stocker dans le storage, on doit les convertir en "string lineaire",
         // et ajout dans le local storage.
         let conversion = JSON.stringify(commande);
-        sessionStorage.setItem("panier-nounours", conversion);
+        localStorage.setItem("panier-nounours", conversion);
 
         // Informe le client que sont produit à été ajouté à son panier.
         alert(produit.name + " ajouté au panier");

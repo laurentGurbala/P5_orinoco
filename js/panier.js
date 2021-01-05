@@ -3,7 +3,7 @@ const divPanier = document.getElementById("div-panier");
 const divTotal = document.getElementById("div-total");
 
 // Récupération et convertion du panier de la commande (objet JS)
-const panier = JSON.parse(sessionStorage.getItem("panier-nounours"));
+const panier = JSON.parse(localStorage.getItem("panier-nounours"));
 
 let total = 0;
 
@@ -11,7 +11,7 @@ let total = 0;
 
 /**
  * Affichage du message "votre panier est vide"
- * si le sessionStorage est vide.
+ * si le local Storage est vide.
  */
 function messagePanierVide() {
     const message = document.createElement("p");    // Création d'un élément HTML <p>
@@ -103,15 +103,15 @@ if(panier != null) {
             
             // Converti les objets en string linéaire pour le storage
             let conversionJson = JSON.stringify(panier);
-            // Mise à jour du session storage
-            sessionStorage.setItem("panier-nounours", conversionJson);
+            // Mise à jour du local storage
+            localStorage.setItem("panier-nounours", conversionJson);
             
             // Supprime l'article de la page HTML
             lstBtnSupprime[i].parentElement.remove();
             
             // Vérification du panier vide
             if (panier.length === 0) {
-                sessionStorage.removeItem("panier-nounours");
+                localStorage.removeItem("panier-nounours");
                 console.log(panier);
             }
             
@@ -155,7 +155,7 @@ const formVille = document.getElementById("ville");
 const formEmail = document.getElementById("email");
 
 // Pré-remplissage du formulaire
-const contactJson = sessionStorage.getItem("contact");
+const contactJson = localStorage.getItem("contact");
 if(contactJson !== null) {
 
     const contact = JSON.parse(contactJson);
@@ -247,7 +247,7 @@ btnValidation.addEventListener("click", (evenement) => {
         // Conversion de l'objet en json string lineaire (format pour le storage)
         const contactJson = JSON.stringify(contact);
         // Envoie de l'objet contact dans le session storage
-        sessionStorage.setItem("contact", contactJson);
+        localStorage.setItem("contact", contactJson);
 
 
         // Récupérer la commande
@@ -279,9 +279,9 @@ btnValidation.addEventListener("click", (evenement) => {
                     .then(data => {
                         console.log(data);
                         // Sauvegarde des données du backend
-                        sessionStorage.setItem("data", JSON.stringify(data));
+                        localStorage.setItem("data", JSON.stringify(data));
                         // Suppression du panier
-                        sessionStorage.removeItem("panier-nounours");
+                        localStorage.removeItem("panier-nounours");
                         window.location = "confirmation.html";
                     })
                     .catch((erreur) => {console.error(erreur)

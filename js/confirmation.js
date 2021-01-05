@@ -1,5 +1,5 @@
 // Récupération sous forme d'objet le contenu du storage
-const data = JSON.parse(sessionStorage.getItem("data"));
+const data = JSON.parse(localStorage.getItem("data"));
 console.log(data);
 
 // Récupération et modification des éléments du HTML

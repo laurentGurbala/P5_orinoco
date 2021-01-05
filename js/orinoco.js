@@ -17,7 +17,7 @@ function genererCarte(lstNounours) {
 
         // Image de la carte
         const carteImage = document.createElement("img");
-        carteImage.classList.add( "card-img-top", "img-thumbnail", "shadow");
+        carteImage.classList.add( "card-img-top", "img-thumbnail", "image", "shadow");
         carteImage.src = item.imageUrl;
         carteImage.alt = "ourson en peluche";
         carte.append(carteImage);
