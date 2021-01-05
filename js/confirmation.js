@@ -28,3 +28,6 @@ for (let i = 0; i < data.products.length; i++) {
     total += item.price;
 }
 divTotal.textContent = total/100 + " €"
+
+// Suppression des data de la commande dans le local storage
+localStorage.removeItem("data");

@@ -181,6 +181,9 @@ function messageErreurFormulaire(message) {
     
     // Ajout de l'élément dans la liste des erreurs
     messErr.append(liErr);
+
+    // switch le display
+    messErr.parentElement.classList.replace("d-none", "d-block");
 }
 
 // Test si une erreur dans le formulaire existe
@@ -289,11 +292,9 @@ btnValidation.addEventListener("click", (evenement) => {
             }
 
         } else {
-            console.log("tu as cliqué sur valider, mais t'as rien commandé ??!")
+            messageErreurFormulaire("tu as cliqué sur valider, mais t'as rien commandé ??!");
         }
 
 
-    } else {
-        messErr.parentElement.classList.replace("d-none", "d-block");
-    }
+    } 
 });
