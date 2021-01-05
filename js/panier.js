@@ -10,9 +10,9 @@ let total = 0;
 // Les fonctions
 
 /**
- * Affichage du message "votre panier est vide"
- * si le local Storage est vide.
- */
+* Affichage du message "votre panier est vide"
+* si le local Storage est vide.
+*/
 function messagePanierVide() {
     const message = document.createElement("p");    // Création d'un élément HTML <p>
     message.classList.add("h3", "text-center");     // Ajout des classes     
@@ -21,23 +21,23 @@ function messagePanierVide() {
 }
 
 /**
- * Créer le contenu du panier pour un nounours
- */
+* Créer le contenu du panier pour un nounours
+*/
 function creerContenuPanier(objet) {
     
     // Création de la ligne bootstrap
     const row = document.createElement("div");
     row.classList.add("row", "p-3", "mb-5", "align-items-center");
     row.setAttribute("style", "height: 100px");
-
+    
     // Création des infos
-
+    
     // --- Image du nounours ---
     const objetImage = document.createElement("img");
     objetImage.classList.add("col-2", "img-fluid");
     objetImage.src = objet.image;
     objetImage.alt = "ourson en peluche";
-
+    
     // --- Nom du nounours ---
     const objetNom = document.createElement("div");
     objetNom.classList.add("col-3");
@@ -47,31 +47,65 @@ function creerContenuPanier(objet) {
     const objetCouleur = document.createElement("div");
     objetCouleur.classList.add("col-3");
     objetCouleur.innerHTML = objet.couleur;
-
+    
     // --- Prix du nounours ---
     const objetPrix = document.createElement("div");
     objetPrix.classList.add("col-3");
     objetPrix.innerHTML = objet.prix;
-
+    
     // --- btn supprime du nounours ---
     const btnSuppr = document.createElement("button");
     btnSuppr.classList.add("btn", "btn-supprime");
     btnSuppr.innerHTML = '<i class="far fa-trash-alt"></i>';
-
+    
     // Ajout des containeurs
     row.append(objetImage);
     row.append(objetNom);
     row.append(objetCouleur);
     row.append(objetPrix);
     row.append(btnSuppr);
-
+    
     divPanier.append(row);
-
+    
 }
 
 // Suppression d'un produit du panier
 function supprimeProduitDuPanier() {
-
+    // Supprime un article du panier
+    // Tous les boutons supprimer de la page
+    const lstBtnSupprime = document.getElementsByClassName("btn-supprime");
+    
+    if(panier != null) {
+        
+        for (let i = 0; i < panier.length; i++) {
+            lstBtnSupprime[i].addEventListener("click", (event) => {
+                event.preventDefault();
+                // Supprime l'objet du panier
+                panier.splice(i, 1);
+                
+                // Converti les objets en string linéaire pour le storage
+                let conversionJson = JSON.stringify(panier);
+                // Mise à jour du local storage
+                localStorage.setItem("panier-nounours", conversionJson);
+                
+                // Supprime l'article de la page HTML
+                lstBtnSupprime[i].parentElement.remove();
+                
+                // Vérification du panier vide
+                if (panier.length === 0) {
+                    localStorage.removeItem("panier-nounours");
+                    console.log(panier);
+                }
+                
+                /**
+                * Pour éviter que le [i] ne s'actualise pas après une suppression,
+                * pouvant créer un bug, on actualise la page, relançant la boucle,
+                * ce qui redéfinie le [i]
+                */
+                window.location.href = "panier.html";
+            })
+        }
+    }
 }
 
 
@@ -82,46 +116,10 @@ if(panier === null) {
 // Création du contenue du session storage dans le panier
 else {
     for (const item of panier) {
-
+        
         creerContenuPanier(item);
         total += item.prix;
         divTotal.textContent = total + " €"
-    }
-}
-
-// Supprime un article du panier
-// Tous les boutons supprimer de la page
-const lstBtnSupprime = document.getElementsByClassName("btn-supprime");
-
-if(panier != null) {
-
-    for (let i = 0; i < panier.length; i++) {
-        lstBtnSupprime[i].addEventListener("click", (event) => {
-            event.preventDefault();
-            // Supprime l'objet du panier
-            panier.splice(i, 1);
-            
-            // Converti les objets en string linéaire pour le storage
-            let conversionJson = JSON.stringify(panier);
-            // Mise à jour du local storage
-            localStorage.setItem("panier-nounours", conversionJson);
-            
-            // Supprime l'article de la page HTML
-            lstBtnSupprime[i].parentElement.remove();
-            
-            // Vérification du panier vide
-            if (panier.length === 0) {
-                localStorage.removeItem("panier-nounours");
-                console.log(panier);
-            }
-            
-            /**
-             * Pour éviter que le [i] ne s'actualise pas après une suppression,
-             * pouvant créer un bug, on actualise la page, relançant la boucle,
-             * ce qui redéfinie le [i]
-             */
-            window.location.href = "panier.html";
-        })
     }
 }
 
@@ -131,9 +129,9 @@ function validationUniquementTexte(value) {
     return /^[a-zA-Z]+$/.test(value);
 }
 
-function validationUniquementChiffre(value) {
-    return /^[0-9]+$/.test(value);
-}
+// function validationUniquementChiffre(value) {
+//     return /^[0-9]+$/.test(value);
+// }
 
 function validationTexteEtChiffre(value) {
     return /\w+/.test(value);
@@ -147,6 +145,8 @@ function validationEmail(value) {
     return false;
 }
 
+supprimeProduitDuPanier();
+
 // Récupération des champs du formulaire
 const formNom = document.getElementById("nom");
 const formPrenom = document.getElementById("prenom");
@@ -157,7 +157,7 @@ const formEmail = document.getElementById("email");
 // Pré-remplissage du formulaire
 const contactJson = localStorage.getItem("contact");
 if(contactJson !== null) {
-
+    
     const contact = JSON.parse(contactJson);
     
     formNom.value = contact.firstName;
@@ -181,7 +181,7 @@ function messageErreurFormulaire(message) {
     
     // Ajout de l'élément dans la liste des erreurs
     messErr.append(liErr);
-
+    
     // switch le display
     messErr.parentElement.classList.replace("d-none", "d-block");
 }
@@ -219,7 +219,7 @@ function testValidationFormulaire() {
         messageErreurFormulaire(message);
         valide = false;
     }
-
+    
     return valide;
 }
 
@@ -232,9 +232,9 @@ btnValidation.addEventListener("click", (evenement) => {
     // Reset de la liste des erreurs
     messErr.innerHTML = "";
     messErr.parentElement.classList.replace("d-block", "d-none");
-
+    
     let formulaireValide = testValidationFormulaire();
-
+    
     if(formulaireValide == true) {
         // console.log("bravo, ton formulaire est bien remplie");
         
@@ -246,16 +246,16 @@ btnValidation.addEventListener("click", (evenement) => {
             city : formVille.value,
             email : formEmail.value
         }
-
+        
         // Conversion de l'objet en json string lineaire (format pour le storage)
         const contactJson = JSON.stringify(contact);
         // Envoie de l'objet contact dans le session storage
         localStorage.setItem("contact", contactJson);
-
-
+        
+        
         // Récupérer la commande
         if (panier !== null) {
-
+            
             let product = []
             panier.forEach(item => {
                 product.push(item.id);
@@ -274,27 +274,27 @@ btnValidation.addEventListener("click", (evenement) => {
                 
                 // Requete fetch de type POST
                 fetch("http://localhost:3000/api/teddies/order", {
-                    method: "POST",
-                    headers: {'content-Type' : 'application/json'},
-                    body: objetRequest
-                })
-                    .then(reponse => reponse.json())
-                    .then(data => {
-                        console.log(data);
-                        // Sauvegarde des données du backend
-                        localStorage.setItem("data", JSON.stringify(data));
-                        // Suppression du panier
-                        localStorage.removeItem("panier-nounours");
-                        window.location = "confirmation.html";
-                    })
-                    .catch((erreur) => {console.error(erreur)
-                });
-            }
-
-        } else {
-            messageErreurFormulaire("tu as cliqué sur valider, mais t'as rien commandé ??!");
+                method: "POST",
+                headers: {'content-Type' : 'application/json'},
+                body: objetRequest
+            })
+            .then(reponse => reponse.json())
+            .then(data => {
+                console.log(data);
+                // Sauvegarde des données du backend
+                localStorage.setItem("data", JSON.stringify(data));
+                // Suppression du panier
+                localStorage.removeItem("panier-nounours");
+                window.location = "confirmation.html";
+            })
+            .catch((erreur) => {console.error(erreur)
+            });
         }
-
-
-    } 
+        
+    } else {
+        messageErreurFormulaire("tu as cliqué sur valider, mais t'as rien commandé ??!");
+    }
+    
+    
+} 
 });

@@ -48,7 +48,7 @@ function ajoutProduitDansLocalStorage(produit) {
         event.preventDefault();
 
         // Sauvegarder l'option choisie
-        const couleurNounours = document.getElementById("couleur")
+        const couleurNounours = document.getElementById("couleur");
         const couleurChoisie = couleurNounours.value;
         
         /**
